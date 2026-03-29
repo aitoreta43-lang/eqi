@@ -1,0 +1,590 @@
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>EquiGrow - Mutual Funds for Everyone</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00D09C",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                        "neutral-light": "#e7f3eb",
+                        "neutral-dark": "#1a2e21",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        /* Sub Branding Component */
+
+        .brand-container {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .main-title {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 800;
+            color: #1e2132;
+            letter-spacing: -1px;
+        }
+
+        .dark .main-title {
+            color: white;
+        }
+
+        .sponsored-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            margin-top: 6px;
+        }
+
+        .sponsored-label {
+            font-size: 10px;
+            color: #7c7e8c;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: .8px;
+            margin-right: 6px;
+        }
+
+        .logo-flex {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .groww-perfection {
+            width: 18px;
+            height: 18px;
+            transition: transform .3s ease;
+        }
+
+        .groww-text {
+            font-size: 16px;
+            font-weight: 700;
+            color: #44475b;
+            letter-spacing: -.5px;
+            transition: color .3s ease;
+        }
+
+        .dark .groww-text {
+            color: #d1d5db;
+        }
+
+        .sponsored-link:hover .groww-perfection {
+            transform: scale(1.15);
+        }
+
+        .sponsored-link:hover .growth-line {
+            fill: #00ffc3;
+        }
+
+        .sponsored-link:hover .groww-text {
+            color: #5367ff;
+        }
+
+        @media(max-width:768px) {
+            .main-title {
+                font-size: 22px;
+            }
+
+            .groww-text {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 overflow-x-hidden">
+    <header
+        class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-neutral-light dark:border-neutral-dark px-6 md:px-20 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-10">
+
+                <div class="brand-container">
+                    <h1 class="main-title">EquiGrow</h1>
+
+                    <a href="https://groww.in" target="_blank" class="sponsored-link">
+                        <span class="sponsored-label">Sponsored by</span>
+
+                        <div class="logo-flex">
+
+                            <svg class="groww-perfection" viewBox="0 0 100 100">
+                                <defs>
+                                    <clipPath id="growwCircle">
+                                        <circle cx="50" cy="50" r="50" />
+                                    </clipPath>
+                                </defs>
+
+                                <g clip-path="url(#growwCircle)">
+                                    <rect width="100" height="100" fill="#5367ff" />
+
+                                    <path d="M0 72 L30 55 L55 70 L80 45 L100 58 V100 H0 Z" fill="#00b386"
+                                        opacity="0.8" />
+
+                                    <path d="M0 65 L30 48 L55 63 L80 38 L100 51 V100 H0 Z" fill="#00d09c" />
+
+                                    <path class="growth-line" d="M0 58 L30 41 L55 56 L80 31 L100 44 V100 H0 Z"
+                                        fill="#14e3b2" />
+                                </g>
+
+                            </svg>
+
+                            <span class="groww-text">Groww</span>
+
+                        </div>
+                    </a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="hidden md:flex items-center bg-neutral-light dark:bg-neutral-dark rounded-lg px-3 py-2">
+                        <span class="material-symbols-outlined text-primary text-xl">search</span>
+                        <input class="bg-transparent border-none focus:ring-0 text-sm w-40 placeholder:text-slate-500"
+                            placeholder="Search funds..." type="text" />
+                    </div>
+                    <button
+                        class="bg-primary text-black font-semibold px-6 py-2.5 rounded-full shadow-md hover:shadow-lg transition-all duration-300">
+                        Get Started
+                    </button>
+                    <div
+                        class="w-10 h-10 rounded-full bg-neutral-light dark:bg-neutral-dark flex items-center justify-center overflow-hidden border border-primary/20">
+                        <span class="material-symbols-outlined text-slate-500">person</span>
+                    </div>
+                </div>
+            </div>
+    </header>
+    <main>
+        <section class="relative px-6 md:px-20 py-24 md:py-32 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="flex flex-col gap-8">
+                    <div class="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1 rounded-full w-fit">
+                        <span class="material-symbols-outlined text-sm">verified</span>
+                        <span class="text-xs font-bold uppercase tracking-wider">Built for long-term investors</span>
+                    </div>
+                    <h2
+                        class="text-5xl md:text-7xl font-extrabold leading-tight tracking-tight text-slate-900 dark:text-slate-100">
+                        Funds as diverse as our investors
+                    </h2>
+                    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-lg leading-relaxed">
+                        Start your investment journey with expert-managed portfolios tailored for beginners. High
+                        transparency, low costs, and consistent growth.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <button
+                            class="bg-primary text-background-dark font-bold px-8 py-4 rounded-xl text-lg hover:scale-105 transition-transform flex items-center gap-2">
+                            Explore ETFs <span class="material-symbols-outlined">trending_up</span>
+                        </button>
+                        <button
+                            class="bg-neutral-light dark:bg-neutral-dark font-semibold px-8 py-4 rounded-xl text-lg hover:bg-neutral-light/50 transition-colors">
+                            View Performance
+                        </button>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="absolute -inset-4 bg-primary/20 blur-3xl rounded-full"></div>
+                    <div
+                        class="relative bg-white dark:bg-neutral-dark p-6 rounded-3xl shadow-2xl border border-neutral-light dark:border-white/10">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <span class="text-xs font-bold text-slate-400 uppercase">Top Performer</span>
+                                <h3 class="text-xl font-bold">Nifty 50 Index Fund</h3>
+                            </div>
+                            <div class="bg-primary/20 text-primary p-2 rounded-lg">
+                                <span class="material-symbols-outlined">analytics</span>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-end">
+                                <span class="text-3xl font-black text-primary">+18.4% <span
+                                        class="text-sm font-normal text-slate-500">YTD</span></span>
+                                <div class="flex gap-1">
+                                    <div class="w-1 h-4 bg-primary/30 rounded-full"></div>
+                                    <div class="w-1 h-6 bg-primary/50 rounded-full"></div>
+                                    <div class="w-1 h-8 bg-primary rounded-full"></div>
+                                    <div class="w-1 h-5 bg-primary/40 rounded-full"></div>
+                                </div>
+                            </div>
+                            <div
+                                class="h-32 bg-background-light dark:bg-background-dark/50 rounded-lg flex items-center justify-center border border-dashed border-slate-300 dark:border-slate-700">
+                                <span class="text-slate-400 text-sm">Performance Chart Visual</span>
+                            </div>
+                            <div class="flex gap-4 pt-2">
+                                <div class="flex-1 p-3 rounded-lg bg-neutral-light dark:bg-neutral-dark/50">
+                                    <p class="text-[10px] text-slate-500 font-bold uppercase">Expense Ratio</p>
+                                    <p class="font-bold">0.05%</p>
+                                </div>
+                                <div class="flex-1 p-3 rounded-lg bg-neutral-light dark:bg-neutral-dark/50">
+                                    <p class="text-[10px] text-slate-500 font-bold uppercase">Risk Level</p>
+                                    <p class="font-bold text-orange-500">Moderate</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="bg-white dark:bg-neutral-dark/30 py-20 border-y border-neutral-light dark:border-neutral-dark">
+            <div class="max-w-7xl mx-auto px-6 md:px-20">
+                <div class="mb-12 text-center">
+                    <h2 class="text-3xl font-bold mb-4">Planning to make your first Crore</h2>
+                    <p class="text-slate-500">Estimate your wealth growth over time with our compound interest
+                        calculator.</p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
+                    <div class="lg:col-span-2 space-y-10">
+                        <div class="space-y-4">
+                            <div class="flex justify-between font-bold">
+                                <span>Monthly Investment</span>
+                                <span class="text-primary text-xl">₹ 25,000</span>
+                            </div>
+                            <input
+                                class="w-full h-2 bg-neutral-light rounded-lg appearance-none cursor-pointer accent-primary"
+                                max="100000" min="500" step="500" type="range" value="25000" />
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex justify-between font-bold">
+                                <span>Expected Return Rate (%)</span>
+                                <span class="text-primary text-xl">12%</span>
+                            </div>
+                            <input
+                                class="w-full h-2 bg-neutral-light rounded-lg appearance-none cursor-pointer accent-primary"
+                                max="30" min="1" step="0.5" type="range" value="12" />
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex justify-between font-bold">
+                                <span>Time Period (Years)</span>
+                                <span class="text-primary text-xl">15 Years</span>
+                            </div>
+                            <input
+                                class="w-full h-2 bg-neutral-light rounded-lg appearance-none cursor-pointer accent-primary"
+                                max="40" min="1" step="1" type="range" value="15" />
+                        </div>
+                    </div>
+                    <div
+                        class="bg-neutral-light dark:bg-neutral-dark p-8 rounded-2xl flex flex-col items-center text-center">
+                        <div class="relative w-48 h-48 mb-6">
+                            <svg class="w-full h-full transform -rotate-90">
+                                <circle class="text-slate-300 dark:text-slate-700" cx="96" cy="96" fill="transparent"
+                                    r="80" stroke="currentColor" stroke-width="24"></circle>
+                                <circle class="text-primary" cx="96" cy="96" fill="transparent" r="80"
+                                    stroke="currentColor" stroke-dasharray="502" stroke-dashoffset="150"
+                                    stroke-width="24"></circle>
+                            </svg>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                <span class="text-xs text-slate-500 uppercase font-bold">Final Value</span>
+                                <span class="text-xl font-black">₹1.2 Cr</span>
+                            </div>
+                        </div>
+                        <div class="space-y-3 w-full">
+                            <div class="flex justify-between text-sm">
+                                <span class="flex items-center gap-2"><span
+                                        class="w-3 h-3 bg-slate-400 rounded-full"></span> Invested Amount</span>
+                                <span class="font-bold">₹45.0 L</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="flex items-center gap-2"><span
+                                        class="w-3 h-3 bg-primary rounded-full"></span> Est. Returns</span>
+                                <span class="font-bold text-primary">₹75.4 L</span>
+                            </div>
+                            <hr class="border-slate-300 dark:border-slate-700 my-4" />
+                            <button
+                                class="w-full bg-background-dark dark:bg-primary dark:text-background-dark text-white font-bold py-3 rounded-lg">Invest
+                                Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="bg-background-dark text-white py-24 px-6 md:px-20 overflow-hidden relative">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-primary/10 blur-[120px] rounded-full"></div>
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="max-w-2xl mb-16">
+                    <h2 class="text-4xl font-black mb-6">Our Investing Philosophy</h2>
+                    <p class="text-slate-400 text-lg">We don't follow the crowd. We follow the data. Our strategies are
+                        built on decades of market insight and rigorous analysis.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div
+                        class="group bg-neutral-dark p-10 rounded-3xl border border-white/5 hover:border-primary/50 transition-all">
+                        <div
+                            class="w-16 h-16 bg-blue-500/20 text-blue-400 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-4xl">search_insights</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-blue-100">Rigorous stock selection</h3>
+                        <p class="text-slate-400 leading-relaxed">We analyze over 500 parameters before adding a single
+                            stock to our funds. Quality over quantity, always.</p>
+                    </div>
+                    <div
+                        class="group bg-neutral-dark p-10 rounded-3xl border border-white/5 hover:border-primary/50 transition-all">
+                        <div
+                            class="w-16 h-16 bg-primary/20 text-primary rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-4xl">dynamic_feed</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-primary/90">Dynamic portfolio management</h3>
+                        <p class="text-slate-400 leading-relaxed">Market conditions change daily. Our algorithms and
+                            experts adapt your portfolio in real-time to mitigate risks.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="py-24 px-6 md:px-20 max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-12">
+                <div>
+                    <h2 class="text-3xl font-bold mb-4">News &amp; Insights</h2>
+                    <p class="text-slate-500">Educational content to help you make smarter financial decisions.</p>
+                </div>
+                <a class="text-primary font-bold flex items-center gap-2 hover:underline" href="#">View all articles
+                    <span class="material-symbols-outlined">arrow_forward</span></a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div
+                    class="bg-white dark:bg-neutral-dark rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 hover:shadow-xl transition-shadow border border-neutral-light dark:border-neutral-dark">
+                    <div class="aspect-video bg-neutral-light bg-cover bg-center"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAYaVPk8UJStMiK9EX1P1ns4vMhqDGXOBhxX52IihEHXVfYtKqVyucI_C20FJlyUVLbqCUS1ixpRF9iCu2b5ymV6PCZZw1xaRwvXceaI1N7WuEdbPdjx6XJ2Q4BUZ8VIGBarsAGHhlbGgcpC27yIPJYBZ8J8tesnPxJ7rL_Wey53aDLnjgZow_1qqSvq8Sfy1lp_mOaMP91s1mdFOaAQYfWcX_Wgd9rndVsU7ra4fawZUiLEMWJ79vtqjTt9JtBYsRuuDKgn0Wyyrwk')">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-[10px] font-black uppercase text-primary mb-2 block">Beginner Guide</span>
+                        <h4 class="font-bold text-lg mb-3 leading-snug">Mutual Funds vs ETFs: Which one is right for
+                            you?</h4>
+                        <p class="text-slate-500 text-sm mb-4 line-clamp-2">Understanding the key differences between
+                            these two popular investment vehicles...</p>
+                        <div class="flex items-center gap-2 text-xs text-slate-400">
+                            <span class="material-symbols-outlined text-sm">schedule</span> 5 min read
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="bg-white dark:bg-neutral-dark rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 hover:shadow-xl transition-shadow border border-neutral-light dark:border-neutral-dark">
+                    <div class="aspect-video bg-neutral-light bg-cover bg-center"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBcece844NxReNjBW0RLKB6edHOn_TIwzACFA5KooW3ezryod7MFPbtaOJXRM0zxZKiWR21yjzR-h79zSbQ6Jwwk1Ul6kERgJX_2P_QQX7vvNiGJyCqMoyAMj5z0f6Y1DnPIRLp7MLlu6Wa3WFojc7DaE-rlPUl1pjks4mqPJVegdfIwWQugOMOJ3NAh-ZWeBQD0pijTUJbB-Qsb-WGrgpFKWZE5Sklq9ssUenolLBPzbY3RDeMJnn9T6N7KoOzHHKcim8VoUTcYCNA')">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-[10px] font-black uppercase text-primary mb-2 block">Market Analysis</span>
+                        <h4 class="font-bold text-lg mb-3 leading-snug">Why SIP is the secret weapon for long-term
+                            wealth</h4>
+                        <p class="text-slate-500 text-sm mb-4 line-clamp-2">How small, regular investments can lead to
+                            massive returns over decades of compound interest.</p>
+                        <div class="flex items-center gap-2 text-xs text-slate-400">
+                            <span class="material-symbols-outlined text-sm">schedule</span> 8 min read
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="bg-white dark:bg-neutral-dark rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 hover:shadow-xl transition-shadow border border-neutral-light dark:border-neutral-dark">
+                    <div class="aspect-video bg-neutral-light bg-cover bg-center"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBnNtS7G4VDrWEbgsZq8w2s3PxLSUGBT40z_swuGoKgOdy9tbYUoIp8wR_L1uK7DQB_2l3AekBQVW4JrXnCABinx83_dMPwF3ILGtzbV4EvE3LKUZ952G6PM7kSkLM1td5j5dzwgbLqqDQMXofkGFd91itB1JNhD8FNy0yDmamllzZjWjLE4vbZkaszhrJaYpric4iSuucukdQCLznBJnkHf5hducJYXAb5IdqjFlhvFuokm8pU589Ep4NF9FmoFmnm8Ks6yjYbkwh0')">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-[10px] font-black uppercase text-primary mb-2 block">Economy</span>
+                        <h4 class="font-bold text-lg mb-3 leading-snug">Interest Rates and Mutual Funds: What's the
+                            link?</h4>
+                        <p class="text-slate-500 text-sm mb-4 line-clamp-2">Exploring how central bank policies affect
+                            your debt and equity fund returns.</p>
+                        <div class="flex items-center gap-2 text-xs text-slate-400">
+                            <span class="material-symbols-outlined text-sm">schedule</span> 6 min read
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 mt-12">
+        <div class="max-w-7xl mx-auto px-6 py-10">
+
+            <!-- Footer Top -->
+            <div class="flex flex-col md:flex-row justify-between gap-8">
+
+                <!-- Brand Section -->
+                <div class="brand-container">
+                    <h2 class="main-title text-2xl">EquiGrow</h2>
+
+                    <a href="https://groww.in" target="_blank" class="sponsored-link">
+                        <span class="sponsored-label">Sponsored by</span>
+
+                        <div class="logo-flex">
+
+                            <svg class="groww-perfection" viewBox="0 0 100 100">
+                                <defs>
+                                    <clipPath id="growwCircleFooter">
+                                        <circle cx="50" cy="50" r="50" />
+                                    </clipPath>
+                                </defs>
+
+                                <g clip-path="url(#growwCircleFooter)">
+                                    <rect width="100" height="100" fill="#5367ff" />
+
+                                    <path d="M0 72 L30 55 L55 70 L80 45 L100 58 V100 H0 Z" fill="#00b386"
+                                        opacity="0.8" />
+
+                                    <path d="M0 65 L30 48 L55 63 L80 38 L100 51 V100 H0 Z" fill="#00d09c" />
+
+                                    <path class="growth-line" d="M0 58 L30 41 L55 56 L80 31 L100 44 V100 H0 Z"
+                                        fill="#14e3b2" />
+                                </g>
+
+                            </svg>
+
+                            <span class="groww-text">Groww</span>
+
+                        </div>
+                    </a>
+
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-3 max-w-sm">
+                        Investment insights, mutual fund comparisons, and smart financial tools to help you grow your
+                        wealth.
+                    </p>
+
+                </div>
+
+                <!-- Footer Links -->
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8 text-sm">
+
+                    <div>
+                        <h3 class="font-semibold mb-3 text-gray-800 dark:text-gray-200">Platform</h3>
+                        <ul class="space-y-2 text-gray-500 dark:text-gray-400">
+                            <li><a href="#">Mutual Funds</a></li>
+                            <li><a href="#">SIP Calculator</a></li>
+                            <li><a href="#">Top Funds</a></li>
+                            <li><a href="#">Market News</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="font-semibold mb-3 text-gray-800 dark:text-gray-200">Company</h3>
+                        <ul class="space-y-2 text-gray-500 dark:text-gray-400">
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Privacy</a></li>
+                            <li><a href="#">Terms</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="font-semibold mb-3 text-gray-800 dark:text-gray-200">Resources</h3>
+                        <ul class="space-y-2 text-gray-500 dark:text-gray-400">
+                            <li><a href="#">Investment Guide</a></li>
+                            <li><a href="#">Beginner Guide</a></li>
+                            <li><a href="#">Risk Calculator</a></li>
+                            <li><a href="#">FAQs</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div
+                class="border-t border-gray-200 dark:border-gray-700 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500 dark:text-gray-400">
+
+                <p>© 2026 EquiGrow. All rights reserved.</p>
+
+                <p>
+                    Powered by insights from
+                    <a href="https://groww.in" target="_blank" class="hover:text-blue-500 font-medium">
+                        Groww
+                    </a>
+                </p>
+
+            </div>
+
+        </div>
+    </footer>
+    <div id="floatingVideo" class="fixed bottom-6 right-6 w-[280px] rounded-xl overflow-hidden shadow-2xl z-50 bg-black"
+        style="display:none;">
+
+        <!-- TOP BAR -->
+        <div class="flex justify-between items-center bg-black/80 text-white text-xs px-3 py-2">
+            <span>📈 Stock Market </span>
+
+            <div class="flex gap-2">
+                <button onclick="minimizeVideo()" class="text-yellow-300">–</button>
+                <button onclick="closeVideo()" class="text-red-400">✕</button>
+            </div>
+        </div>
+
+        <!-- VIDEO -->
+        <video id="promoVideo" class="w-full h-[170px] object-cover" autoplay muted loop controls playsinline>
+
+            <source src="promo.mp4" type="video/mp4">
+
+            Your browser does not support the video tag.
+        </video>
+
+
+    </div>
+
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            let videoBox = document.getElementById("floatingVideo");
+
+            setTimeout(() => {
+                videoBox.style.display = "block";
+            }, 3000);
+
+
+            // DRAG SYSTEM
+            let isDragging = false;
+            let offsetX, offsetY;
+
+            videoBox.addEventListener("mousedown", function (e) {
+                isDragging = true;
+                offsetX = e.clientX - videoBox.offsetLeft;
+                offsetY = e.clientY - videoBox.offsetTop;
+            });
+
+            document.addEventListener("mousemove", function (e) {
+                if (!isDragging) return;
+
+                videoBox.style.left = (e.clientX - offsetX) + "px";
+                videoBox.style.top = (e.clientY - offsetY) + "px";
+            });
+
+            document.addEventListener("mouseup", function () {
+                isDragging = false;
+            });
+
+        });
+
+        function closeVideo() {
+            document.getElementById("floatingVideo").style.display = "none";
+        }
+
+        function minimizeVideo() {
+            let v = document.getElementById("promoVideo");
+            v.style.display = "none";
+        }
+
+        function expandVideo() {
+            let v = document.getElementById("promoVideo");
+            v.style.display = "block";
+        }
+
+    </script>
+
+</body>
+
+</html>
